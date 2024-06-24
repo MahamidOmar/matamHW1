@@ -19,8 +19,15 @@ typedef unsigned int (*updateFunction)(unsigned int);
  * BlockChain - Defining the new BlockChain Type
  *
 */
+
+struct Node{
+    Transaction transaction;
+    string timeStamp;
+    Node* next;
+};
+
 struct BlockChain {
-    // You may add any fields you believe are necessary
+    Node head;
 };
 
 
