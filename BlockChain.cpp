@@ -1,6 +1,8 @@
 #include "BlockChain.h"
 
-int BlockChainGetSize(const BlockChain& blockChain);
+int BlockChainGetSize(const BlockChain& blockChain){
+    return blockChain.size;
+}
 
 int BlockChainPersonalBalance(const BlockChain& blockChain, const string& name);
 
