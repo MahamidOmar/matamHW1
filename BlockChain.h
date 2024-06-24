@@ -27,7 +27,7 @@ struct Node{
 };
 
 struct BlockChain {
-    Node head;
+    Node* head;
     unsigned int size;
 };
 
