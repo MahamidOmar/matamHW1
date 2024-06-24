@@ -22,7 +22,7 @@ int BlockChainPersonalBalance(const BlockChain& blockChain, const string& name){
     return received_amount - payed_amount;
 }
 
-////    the newnode and the new transaction maybe change them to pointers and create with "new" and erase with "delete"
+////    the new node and the new transaction maybe change them to pointers and create with "new" and erase with "delete"
 void BlockChainAppendTransaction(
         BlockChain& blockChain,
         unsigned int value,
@@ -30,14 +30,17 @@ void BlockChainAppendTransaction(
         const string& receiver,
         const string& timestamp
 ){
+    ////    Create a new transaction to be added to the blockchain
     Transaction toAppend;
     toAppend.value = value;
     toAppend.sender = sender;
     toAppend.receiver = receiver;
+    ////    Create a new node to save the new transaction
     Node* newNode;
     newNode->transaction = toAppend;
     newNode->timeStamp = timestamp;
     newNode->next = nullptr;
+    ////    change the head of the blockchain to the new node
     if(blockChain.size == 0){
         blockChain.head = newNode;
     }else{
@@ -48,11 +51,24 @@ void BlockChainAppendTransaction(
     ++blockChain.size;
 }
 
+////    Also need to check if the new node should be created and removed with "new" and "delete"
 void BlockChainAppendTransaction(
         BlockChain& blockChain,
         const Transaction& transaction,
         const string& timestamp
-);
+){
+    Node* newNode;
+    newNode->transaction = transaction;
+    newNode->timeStamp = timestamp;
+    newNode->next = nullptr;
+    if(blockChain.size == 0){
+        blockChain.head = newNode;
+    }else{
+        newNode->next = blockChain.head;
+        blockChain.head = newNode;
+    }
+    ++blockChain.size;
+}
 
 BlockChain BlockChainLoad(ifstream& file);
 
