@@ -17,5 +17,5 @@ bool TransactionVerifyHashedMessage(
         const Transaction& transaction,
         string hashedMessage
 ){
-
+    return hash(transaction.value, transaction.sender, transaction.receiver) == hashedMessage;
 }
