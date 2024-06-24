@@ -28,6 +28,7 @@ struct Node{
 
 struct BlockChain {
     Node head;
+    int size;
 };
 
 
