@@ -15,9 +15,9 @@ int BlockChainPersonalBalance(const BlockChain& blockChain, const string& name){
     Node* iterator = blockChain.head;
     while(iterator != nullptr){
         if(name == iterator->transaction.sender){
-            payed_amount += iterator->transaction.value;
+            payed_amount += (int)iterator->transaction.value;
         }else if(name == iterator->transaction.receiver){
-            received_amount += iterator->transaction.value;
+            received_amount += (int)iterator->transaction.value;
         }
         iterator = iterator->next;
     }
