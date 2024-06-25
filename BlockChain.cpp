@@ -144,6 +144,7 @@ void BlockChainDump(const BlockChain& blockChain, ofstream& file){
     for(int i = 1 ; i <= BlockChainGetSize(blockChain) ; ++i){
         file << i << "." << std::endl;
         TransactionDumpInfo(*(iterator->transaction), file);
+        file << "Transaction Timestamp: " << iterator->timeStamp << std::endl;
 
         iterator = iterator->next;
     }
