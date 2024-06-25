@@ -3,7 +3,7 @@
 void destroyBlockChain(BlockChain& blockChain);
 
 int BlockChainGetSize(const BlockChain& blockChain){
-    return blockChain.size;
+    return (int)blockChain.size;
 }
 
 int BlockChainPersonalBalance(const BlockChain& blockChain, const string& name){
