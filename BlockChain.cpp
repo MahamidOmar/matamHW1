@@ -110,7 +110,7 @@ void BlockChainDump(const BlockChain& blockChain, ofstream& file){
     Node* iterator = blockChain.head;
     for(int i = 1 ; i <= blockChain.size ; ++i){
         file << i << "." << std::endl;
-        TransactionDumpInfo(iterator->transaction, file);
+        TransactionDumpInfo(*(iterator->transaction), file);
 
         iterator = iterator->next;
     }
