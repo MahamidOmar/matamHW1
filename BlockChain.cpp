@@ -77,7 +77,14 @@ void BlockChainAppendTransaction(
 
 ////    may need to check if the file is open, and if I have to close it
 BlockChain BlockChainLoad(ifstream& file){
+    ////    this holds the current line read from the file
     string line;
+    ////    iterator for adding the nodes to the blockchain
+    Node* iterator = nullptr;
+    ////    pointer to the head of the new blockchain that is returned
+    Node* head = nullptr;
+    ////    holds the size of the blockchain
+    unsigned int size = 0;
     while(std::getline(file, line)){
         string sender, receiver, timestamp;
         unsigned int value;
@@ -85,7 +92,6 @@ BlockChain BlockChainLoad(ifstream& file){
         int sender_position = line.find_first_of(' ');
         int receiver_position = line.find_first_of(' ', sender_position + 1);
         int value_position = line.find_first_of(' ', receiver_position + 1);
-//        int timestamp_position = line.find_first_of(' ', value_position + 1);
 
         ////    parse the line
         sender = line.substr(0, sender_position);
@@ -95,10 +101,31 @@ BlockChain BlockChainLoad(ifstream& file){
         value = std::stoi(value_string);
         timestamp = line.substr(value_position + 1);
 
-        //// maybe "new" ?
-        Transaction transaction = {value, sender, receiver};
+        //// create a new transaction to be added to the blockchain
+        Transaction* transaction = new Transaction();
+        transaction->sender = sender;
+        transaction->receiver = receiver;
+        transaction->value = value;
 
+        ////    create a new node to include the new transaction
+        Node* new_node = new Node();
+        new_node->transaction = transaction;
+        new_node->timeStamp = timestamp;
+
+        ////    the case of which this is the first line read from the file, which means the first transaction in the file
+        if(iterator == nullptr){
+            iterator = new_node;
+            head = new_node;
+        }else{
+            ////    need to append to the ending / tail of the blockchain
+            iterator->next = new_node;
+            iterator = iterator->next;
+        }
+
+        ++size;
     }
+    BlockChain blockChain = {head, size};
+    return blockChain;
 }
 
 void BlockChainDump(const BlockChain& blockChain, ofstream& file){
