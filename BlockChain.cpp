@@ -22,6 +22,10 @@ int BlockChainGetSize(const BlockChain& blockChain){
 }
 
 int BlockChainPersonalBalance(const BlockChain& blockChain, const string& name){
+    ////    blockchain is currently empty, no senders or receivers to check
+    if(blockChain.size == 0){
+        return 0;
+    }
     ////  the total of which "name" has sent
     int payed_amount = 0;
     ////  the total of which "name" has received
@@ -221,9 +225,14 @@ void BlockChainCompress(BlockChain& blockChain){
     }
 }
 
-void BlockChainTransform(BlockChain& blockChain, updateFunction function);
-
-
-
-
-
+void BlockChainTransform(BlockChain& blockChain, updateFunction function){
+    ////    blockchain is currently empty, nothing to update
+    if(blockChain.size == 0){
+        return;
+    }
+    Node* iterator = blockChain.head;
+    while(iterator != nullptr){
+        iterator->transaction->value = function(iterator->transaction->value);
+        iterator = iterator->next;
+    }
+}
