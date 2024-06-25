@@ -174,6 +174,7 @@ void BlockChainDumpHashed(const BlockChain& blockChain, ofstream& file){
 }
 
 bool BlockChainVerifyFile(const BlockChain& blockChain, std::ifstream& file){
+    ////    blockchain is empty, nothing to verify
     if(blockChain.size == 0){
         return true;
     }
@@ -189,7 +190,36 @@ bool BlockChainVerifyFile(const BlockChain& blockChain, std::ifstream& file){
     return true;
 }
 
-void BlockChainCompress(BlockChain& blockChain);
+void BlockChainCompress(BlockChain& blockChain){
+    ////    blockchain is empty, nothing to compress
+    if(blockChain.size == 0){
+        return ;
+    }
+    Node* iterator = blockChain.head;
+    ////    check if the next is null because we check to compress each 2 consecutive nodes
+    while (iterator->next != nullptr){
+        Transaction* current_transaction = iterator->transaction;
+        Transaction* next_transaction = iterator->next->transaction;
+        ////    check if the 2 transactions have same sender and receiver
+        if(current_transaction->sender == next_transaction->sender && current_transaction->receiver == next_transaction->receiver){
+            current_transaction->value += next_transaction->value;
+
+            ////    add a pointer to the next node which we are going to delete
+            Node* to_delete = iterator->next;
+
+            ////    move the next of the current node 2 nodes ahead
+            iterator->next = to_delete->next;
+
+            ////    delete the compressed node (the second one)
+            delete to_delete->transaction;
+            delete to_delete;
+
+            ////    in this case we don't move the iterator because we want to check if we can compress it again with another node ahead
+        }else{
+            iterator = iterator->next;
+        }
+    }
+}
 
 void BlockChainTransform(BlockChain& blockChain, updateFunction function);
 
