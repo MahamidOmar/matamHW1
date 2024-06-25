@@ -21,7 +21,7 @@ typedef unsigned int (*updateFunction)(unsigned int);
 */
 
 struct Node{
-    Transaction transaction;
+    Transaction* transaction;
     string timeStamp;
     Node* next;
 };

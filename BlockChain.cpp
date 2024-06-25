@@ -14,10 +14,10 @@ int BlockChainPersonalBalance(const BlockChain& blockChain, const string& name){
     ////  iterator for moving over all the given blockchain nodes
     Node* iterator = blockChain.head;
     while(iterator != nullptr){
-        if(name == iterator->transaction.sender){
-            payed_amount += (int)iterator->transaction.value;
-        }else if(name == iterator->transaction.receiver){
-            received_amount += (int)iterator->transaction.value;
+        if(name == iterator->transaction->sender){
+            payed_amount += (int)iterator->transaction->value;
+        }else if(name == iterator->transaction->receiver){
+            received_amount += (int)iterator->transaction->value;
         }
         iterator = iterator->next;
     }
@@ -33,10 +33,10 @@ void BlockChainAppendTransaction(
         const string& timestamp
 ){
     ////    Create a new transaction to be added to the blockchain
-    Transaction toAppend;
-    toAppend.value = value;
-    toAppend.sender = sender;
-    toAppend.receiver = receiver;
+    Transaction* toAppend = new Transaction();
+    toAppend->value = value;
+    toAppend->sender = sender;
+    toAppend->receiver = receiver;
     ////    Create a new node to save the new transaction
     Node* newNode;
     newNode->transaction = toAppend;
