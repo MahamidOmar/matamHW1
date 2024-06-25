@@ -82,7 +82,6 @@ void BlockChainAppendTransaction(
     BlockChainAppendTransaction(blockChain, transaction.value, transaction.sender, transaction.receiver, timestamp);
 }
 
-////    may need to check if the file is open, and if I have to close it
 BlockChain BlockChainLoad(ifstream& file){
     ////    this holds the current line read from the file
     string line;
