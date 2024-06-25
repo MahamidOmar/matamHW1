@@ -70,7 +70,31 @@ void BlockChainAppendTransaction(
     ++blockChain.size;
 }
 
-BlockChain BlockChainLoad(ifstream& file);
+////    may need to check if the file is open, and if I have to close it
+BlockChain BlockChainLoad(ifstream& file){
+    string line;
+    while(std::getline(file, line)){
+        string sender, receiver, timestamp;
+        unsigned int value;
+        ////    find the index in which every word in the line ends (positions of the spaces)
+        int sender_position = line.find_first_of(' ');
+        int receiver_position = line.find_first_of(' ', sender_position + 1);
+        int value_position = line.find_first_of(' ', receiver_position + 1);
+//        int timestamp_position = line.find_first_of(' ', value_position + 1);
+
+        ////    parse the line
+        sender = line.substr(0, sender_position);
+        receiver = line.substr(sender_position + 1, receiver_position - sender_position - 1);
+        ////    string to save the value before transforming it to an int
+        string value_string = line.substr(receiver_position + 1, value_position - receiver_position - 1);
+        value = std::stoi(value_string);
+        timestamp = line.substr(value_position + 1);
+
+        //// maybe "new" ?
+        Transaction transaction = {value, sender, receiver};
+        
+    }
+}
 
 void BlockChainDump(const BlockChain& blockChain, ofstream& file);
 

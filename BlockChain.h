@@ -31,6 +31,7 @@ struct BlockChain {
     unsigned int size;
 };
 
+void destroyBlockChain(BlockChain& blockChain);
 
 /**
  * BlockChainGetSize - returns the number of Blocks in the BlockChain
