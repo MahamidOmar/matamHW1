@@ -2,7 +2,7 @@
 
 void destroyBlockChain(BlockChain& blockChain){
     ////    blockchain is currently empty, nothing to delete
-    if(blockChain.size == 0){
+    if(BlockChainGetSize(blockChain) == 0){
         return;
     }
     Node* iterator = blockChain.head;
@@ -23,7 +23,7 @@ int BlockChainGetSize(const BlockChain& blockChain){
 
 int BlockChainPersonalBalance(const BlockChain& blockChain, const string& name){
     ////    blockchain is currently empty, no senders or receivers to check
-    if(blockChain.size == 0){
+    if(BlockChainGetSize(blockChain) == 0){
         return 0;
     }
     ////  the total of which "name" has sent
@@ -61,7 +61,7 @@ void BlockChainAppendTransaction(
     newNode->timeStamp = timestamp;
     newNode->next = nullptr;
     ////    change the head of the blockchain to the new node
-    if(blockChain.size == 0){
+    if(BlockChainGetSize(blockChain) == 0){
         blockChain.head = newNode;
     }else{
         newNode->next = blockChain.head;
@@ -85,7 +85,7 @@ void BlockChainAppendTransaction(
     newNode->transaction->value = transaction.value;
     newNode->timeStamp = timestamp;
     newNode->next = nullptr;
-    if(blockChain.size == 0){
+    if(BlockChainGetSize(blockChain) == 0){
         blockChain.head = newNode;
     }else{
         newNode->next = blockChain.head;
@@ -149,12 +149,12 @@ BlockChain BlockChainLoad(ifstream& file){
 
 void BlockChainDump(const BlockChain& blockChain, ofstream& file){
     ////    blockchain is currently empty, nothing to print
-    if(blockChain.size == 0){
+    if(BlockChainGetSize(blockChain) == 0){
         return;
     }
     file << "BlockChain info:" << std::endl;
     Node* iterator = blockChain.head;
-    for(int i = 1 ; i <= blockChain.size ; ++i){
+    for(int i = 1 ; i <= BlockChainGetSize(blockChain) ; ++i){
         file << i << "." << std::endl;
         TransactionDumpInfo(*(iterator->transaction), file);
 
@@ -164,12 +164,12 @@ void BlockChainDump(const BlockChain& blockChain, ofstream& file){
 
 void BlockChainDumpHashed(const BlockChain& blockChain, ofstream& file){
     ////    blockchain is currently empty, nothing to print
-    if(blockChain.size == 0){
+    if(BlockChainGetSize(blockChain) == 0){
         return;
     }
     Node* iterator = blockChain.head;
     ////    run through 1 -> n-1 transactions, and the last one print without new line
-    for(int i = 1 ; i < blockChain.size ; ++i){
+    for(int i = 1 ; i < BlockChainGetSize(blockChain) ; ++i){
         file << TransactionHashedMessage(*(iterator->transaction)) << std::endl;
 
         iterator = iterator->next;
@@ -179,7 +179,7 @@ void BlockChainDumpHashed(const BlockChain& blockChain, ofstream& file){
 
 bool BlockChainVerifyFile(const BlockChain& blockChain, std::ifstream& file){
     ////    blockchain is empty, nothing to verify
-    if(blockChain.size == 0){
+    if(BlockChainGetSize(blockChain) == 0){
         return true;
     }
     Node* iterator = blockChain.head;
@@ -196,7 +196,7 @@ bool BlockChainVerifyFile(const BlockChain& blockChain, std::ifstream& file){
 
 void BlockChainCompress(BlockChain& blockChain){
     ////    blockchain is empty, nothing to compress
-    if(blockChain.size == 0){
+    if(BlockChainGetSize(blockChain) == 0){
         return ;
     }
     Node* iterator = blockChain.head;
@@ -227,7 +227,7 @@ void BlockChainCompress(BlockChain& blockChain){
 
 void BlockChainTransform(BlockChain& blockChain, updateFunction function){
     ////    blockchain is currently empty, nothing to update
-    if(blockChain.size == 0){
+    if(BlockChainGetSize(blockChain) == 0){
         return;
     }
     Node* iterator = blockChain.head;
