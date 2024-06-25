@@ -139,7 +139,7 @@ bool BlockChainVerifyFile(const BlockChain& blockChain, std::ifstream& file){
     string line;
     while(std::getline(file, line)){
         ////    use the verify method of Transaction to check if the hashing is correct
-        if(!TransactionVerifyHashedMessage(iterator->transaction, line)){
+        if(!TransactionVerifyHashedMessage(*(iterator->transaction), line)){
             return false;
         }
         iterator = iterator->next;
