@@ -201,6 +201,9 @@ void BlockChainCompress(BlockChain& blockChain){
             ////    move the next of the current node 2 nodes ahead
             iterator->next = to_delete->next;
 
+            ////    deleted a node, need to reduce the size by one
+            --blockChain.size;
+
             ////    delete the compressed node (the second one)
             delete to_delete->transaction;
             delete to_delete;
