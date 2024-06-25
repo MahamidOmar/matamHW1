@@ -128,7 +128,21 @@ void BlockChainDumpHashed(const BlockChain& blockChain, ofstream& file){
     file << TransactionHashedMessage(iterator->transaction);
 }
 
-bool BlockChainVerifyFile(const BlockChain& blockChain, std::ifstream& file);
+bool BlockChainVerifyFile(const BlockChain& blockChain, std::ifstream& file){
+    if(blockChain.size == 0){
+        return true;
+    }
+    Node* iterator = blockChain.head;
+    string line;
+    while(std::getline(file, line)){
+        ////    use the verify method of Transaction to check if the hashing is correct
+        if(!TransactionVerifyHashedMessage(iterator->transaction, line)){
+            return false;
+        }
+        iterator = iterator->next;
+    }
+    return true;
+}
 
 void BlockChainCompress(BlockChain& blockChain);
 
