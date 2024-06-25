@@ -52,14 +52,18 @@ void BlockChainAppendTransaction(
     ++blockChain.size;
 }
 
-////    Also need to check if the new node should be created and removed with "new" and "delete"
 void BlockChainAppendTransaction(
         BlockChain& blockChain,
         const Transaction& transaction,
         const string& timestamp
 ){
-    Node* newNode;
-    newNode->transaction = transaction;
+    ////    create a new node and new transaction to append to the blockchain
+    Node* newNode = new Node();
+    newNode->transaction = new Transaction();
+    ////    copy the values of the given transaction to the new one (the one to be appended)
+    newNode->transaction->sender = transaction.sender;
+    newNode->transaction->receiver = transaction.receiver;
+    newNode->transaction->value = transaction.value;
     newNode->timeStamp = timestamp;
     newNode->next = nullptr;
     if(blockChain.size == 0){
