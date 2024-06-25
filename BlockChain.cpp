@@ -124,11 +124,11 @@ void BlockChainDumpHashed(const BlockChain& blockChain, ofstream& file){
     Node* iterator = blockChain.head;
     ////    run through 1 -> n-1 transactions, and the last one print without new line
     for(int i = 1 ; i < blockChain.size ; ++i){
-        file << TransactionHashedMessage(iterator->transaction) << std::endl;
+        file << TransactionHashedMessage(*(iterator->transaction)) << std::endl;
 
         iterator = iterator->next;
     }
-    file << TransactionHashedMessage(iterator->transaction);
+    file << TransactionHashedMessage(*(iterator->transaction));
 }
 
 bool BlockChainVerifyFile(const BlockChain& blockChain, std::ifstream& file){
