@@ -99,20 +99,34 @@ BlockChain BlockChainLoad(ifstream& file){
 }
 
 void BlockChainDump(const BlockChain& blockChain, ofstream& file){
+    ////    blockchain is currently empty, nothing to print
+    if(blockChain.size == 0){
+        return;
+    }
     file << "BlockChain info:" << std::endl;
     Node* iterator = blockChain.head;
     for(int i = 1 ; i <= blockChain.size ; ++i){
         file << i << "." << std::endl;
-        file << "Sender Name: " << iterator->transaction.sender << std::endl;
-        file << "Receiver Name: " << iterator->transaction.receiver << std::endl;
-        file << "Transaction Value: " << iterator->transaction.value << std::endl;
-        file << "Transaction Timestamp: " << iterator->timeStamp << std::endl;
+        TransactionDumpInfo(iterator->transaction, file);
 
         iterator = iterator->next;
     }
 }
 
-void BlockChainDumpHashed(const BlockChain& blockChain, ofstream& file);
+void BlockChainDumpHashed(const BlockChain& blockChain, ofstream& file){
+    ////    blockchain is currently empty, nothing to print
+    if(blockChain.size == 0){
+        return;
+    }
+    Node* iterator = blockChain.head;
+    ////    run through 1 -> n-1 transactions, and the last one print without new line
+    for(int i = 1 ; i < blockChain.size ; ++i){
+        file << TransactionHashedMessage(iterator->transaction) << std::endl;
+
+        iterator = iterator->next;
+    }
+    file << TransactionHashedMessage(iterator->transaction);
+}
 
 bool BlockChainVerifyFile(const BlockChain& blockChain, std::ifstream& file);
 
