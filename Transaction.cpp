@@ -6,7 +6,7 @@ void TransactionDumpInfo(const Transaction& transaction, ofstream& file){
     file << "Receiver Name: " << transaction.receiver << std::endl;
 
     //  maybe remove new line here
-    file << "Transaction value: " << transaction.value << std::endl;
+    file << "Transaction Value: " << transaction.value << std::endl;
 }
 
 string TransactionHashedMessage(const Transaction& transaction){

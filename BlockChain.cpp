@@ -139,12 +139,12 @@ void BlockChainDump(const BlockChain& blockChain, ofstream& file){
     if(BlockChainGetSize(blockChain) == 0){
         return;
     }
-    file << "BlockChain info:" << std::endl;
+    file << "BlockChain Info:" << std::endl;
     Node* iterator = blockChain.head;
     for(int i = 1 ; i <= BlockChainGetSize(blockChain) ; ++i){
         file << i << "." << std::endl;
         TransactionDumpInfo(*(iterator->transaction), file);
-        file << "Transaction Timestamp: " << iterator->timeStamp << std::endl;
+        file << "Transaction timestamp: " << iterator->timeStamp << std::endl;
 
         iterator = iterator->next;
     }
