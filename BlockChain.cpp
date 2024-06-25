@@ -1,6 +1,21 @@
 #include "BlockChain.h"
 
-void destroyBlockChain(BlockChain& blockChain);
+void destroyBlockChain(BlockChain& blockChain){
+    ////    blockchain is currently empty, nothing to delete
+    if(blockChain.size == 0){
+        return;
+    }
+    Node* iterator = blockChain.head;
+    while(iterator != nullptr){
+        Node* toDelete = iterator;
+        iterator = iterator->next;
+        delete toDelete->transaction;
+        delete toDelete;
+    }
+    ////    return the blockChain to it's original / starting state
+    blockChain.head = nullptr;
+    blockChain.size = 0;
+}
 
 int BlockChainGetSize(const BlockChain& blockChain){
     return (int)blockChain.size;
