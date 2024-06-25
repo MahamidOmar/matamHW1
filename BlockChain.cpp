@@ -24,7 +24,6 @@ int BlockChainPersonalBalance(const BlockChain& blockChain, const string& name){
     return received_amount - payed_amount;
 }
 
-////    the new node and the new transaction maybe change them to pointers and create with "new" and erase with "delete"
 void BlockChainAppendTransaction(
         BlockChain& blockChain,
         unsigned int value,
@@ -38,7 +37,7 @@ void BlockChainAppendTransaction(
     toAppend->sender = sender;
     toAppend->receiver = receiver;
     ////    Create a new node to save the new transaction
-    Node* newNode;
+    Node* newNode = new Node();
     newNode->transaction = toAppend;
     newNode->timeStamp = timestamp;
     newNode->next = nullptr;
