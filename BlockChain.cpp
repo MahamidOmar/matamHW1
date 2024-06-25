@@ -28,8 +28,10 @@ int BlockChainPersonalBalance(const BlockChain& blockChain, const string& name){
     }
     ////  the total of which "name" has sent
     int payed_amount = 0;
+
     ////  the total of which "name" has received
     int received_amount = 0;
+
     ////  iterator for moving over all the given blockchain nodes
     Node* iterator = blockChain.head;
     while(iterator != nullptr){
@@ -76,22 +78,8 @@ void BlockChainAppendTransaction(
         const Transaction& transaction,
         const string& timestamp
 ){
-    ////    create a new node and new transaction to append to the blockchain
-    Node* newNode = new Node();
-    newNode->transaction = new Transaction();
-    ////    copy the values of the given transaction to the new one (the one to be appended)
-    newNode->transaction->sender = transaction.sender;
-    newNode->transaction->receiver = transaction.receiver;
-    newNode->transaction->value = transaction.value;
-    newNode->timeStamp = timestamp;
-    newNode->next = nullptr;
-    if(BlockChainGetSize(blockChain) == 0){
-        blockChain.head = newNode;
-    }else{
-        newNode->next = blockChain.head;
-        blockChain.head = newNode;
-    }
-    ++blockChain.size;
+    ////    use the above appending method
+    BlockChainAppendTransaction(blockChain, transaction.value, transaction.sender, transaction.receiver, timestamp);
 }
 
 ////    may need to check if the file is open, and if I have to close it
